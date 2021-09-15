@@ -3,6 +3,11 @@ var db;
 function IndexedDb(){
   this.obj = {
     jp_file: null,
+    gameplay: true,
+    adjust: true,
+    pseudoboots: 'nochange',
+    bloodyboots: 'nochange',
+    bloodydamage: '2',
     quickswap: true,
     music: true,
     resume: true,
@@ -58,6 +63,11 @@ IndexedDb.prototype.load = function(){
 }
 
 IndexedDb.prototype.setFormValues = function(){
+  setGameplayMode(this.obj.gameplay);
+  setAdjustMode(this.obj.adjust);
+  el('select-pseudoboots').value = this.obj.pseudoboots;
+  el('select-bloodyboots').value = this.obj.bloodyboots;
+  el('select-bloodydamage').value = this.obj.bloodydamage;
   el('checkbox-quickswap').checked = this.obj.quickswap;
   el('checkbox-music').checked = this.obj.music;
   el('checkbox-resume').checked = this.obj.resume;
@@ -68,6 +78,9 @@ IndexedDb.prototype.setFormValues = function(){
   el('select-menuspeed').value = this.obj.speed;
   el('select-owpalettes').value = this.obj.owp;
   el('select-uwpalettes').value = this.obj.uwp;
+  el('select-pseudoboots2').value = this.obj.pseudoboots;
+  el('select-bloodyboots2').value = this.obj.bloodyboots;
+  el('select-bloodydamage2').value = this.obj.bloodydamage;
   el('checkbox-quickswap2').checked = this.obj.quickswap;
   el('checkbox-music2').checked = this.obj.music;
   el('checkbox-resume2').checked = this.obj.resume;
@@ -85,6 +98,11 @@ IndexedDb.prototype.save = function(tab){
   if (tab==='create')
     id='2';  
   // TODO: add jp rom
+  this.obj.gameplay = el('switch-gameplay'+id).className.endsWith('enabled');
+  this.obj.adjust = el('switch-adjust'+id).className.endsWith('enabled');
+  this.obj.pseudoboots = el('select-pseudoboots'+id).value;
+  this.obj.bloodyboots = el('select-bloodyboots'+id).value;
+  this.obj.bloodydamage = el('select-bloodydamage'+id).value;
   this.obj.quickswap = el('checkbox-quickswap'+id).checked;
   this.obj.music = el('checkbox-music'+id).checked;
   this.obj.resume = el('checkbox-resume'+id).checked;

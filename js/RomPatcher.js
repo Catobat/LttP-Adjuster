@@ -282,26 +282,29 @@ function preparePatchedRom(originalRom, patchedRom){
 	// Adjust the ROM
 	fetchSpriteData(patchedRom,indexedDb.obj.sprite,
 		(rom,sprite) => {
-				zeldaPatcher(rom,indexedDb.obj.beep,indexedDb.obj.color,
-					indexedDb.obj.quickswap,indexedDb.obj.speed,!indexedDb.obj.music,
-					indexedDb.obj.resume,indexedDb.obj.flashing,sprite,
-					indexedDb.obj.owp,indexedDb.obj.uwp);
-				setMessage('create');
-				rom.save();
+			zeldaPatcher(rom,indexedDb.obj.gameplay,indexedDb.obj.adjust,indexedDb.obj.pseudoboots,
+				indexedDb.obj.bloodyboots,indexedDb.obj.bloodydamage,indexedDb.obj.beep,indexedDb.obj.color,
+				indexedDb.obj.quickswap,indexedDb.obj.speed,!indexedDb.obj.music,
+				indexedDb.obj.resume,indexedDb.obj.flashing,sprite,
+				indexedDb.obj.owp,indexedDb.obj.uwp);
+			setMessage('create');
+			rom.save();
 	});
 }
 
 function adjustPatch(romToAdjust){
 	indexedDb.save('apply');
+	romToAdjust = romToAdjust.slice(0);
 	romToAdjust.fileName=romToAdjust.fileName.replace(/\.([^\.]*?)$/, ' (adjusted).$1');	
 	fetchSpriteData(romToAdjust,indexedDb.obj.sprite,
 		(rom,sprite) => {
-				zeldaPatcher(rom,indexedDb.obj.beep,indexedDb.obj.color,
-					indexedDb.obj.quickswap,indexedDb.obj.speed,!indexedDb.obj.music,
-					indexedDb.obj.resume,indexedDb.obj.flashing,sprite,
-					indexedDb.obj.owp,indexedDb.obj.uwp);
-				setMessage('apply');
-				rom.save();
+			zeldaPatcher(rom,indexedDb.obj.gameplay,indexedDb.obj.adjust,indexedDb.obj.pseudoboots,
+				indexedDb.obj.bloodyboots,indexedDb.obj.bloodydamage,indexedDb.obj.beep,indexedDb.obj.color,
+				indexedDb.obj.quickswap,indexedDb.obj.speed,!indexedDb.obj.music,
+				indexedDb.obj.resume,indexedDb.obj.flashing,sprite,
+				indexedDb.obj.owp,indexedDb.obj.uwp);
+			setMessage('apply');
+			rom.save();
 		});
 }
 
@@ -390,11 +393,37 @@ function setCreatorMode(creatorMode){
 	if(creatorMode){
 		el('tab0').style.display='none';
 		el('tab1').style.display='block';
-		el('switch-create').className='switch enabled'
+		el('switch-create').className='switch enabled';
 	}else{
 		el('tab0').style.display='block';
 		el('tab1').style.display='none';
-		el('switch-create').className='switch disabled'
+		el('switch-create').className='switch disabled';
+	}
+}
+function setGameplayMode(gameplayMode){
+	if(gameplayMode){
+		el('row-gameplay').style.display='flex';
+		el('row-gameplay2').style.display='flex';
+		el('switch-gameplay').className='switch valign enabled';
+		el('switch-gameplay2').className='switch valign enabled';
+	}else{
+		el('row-gameplay').style.display='none';
+		el('row-gameplay2').style.display='none';
+		el('switch-gameplay').className='switch valign disabled';
+		el('switch-gameplay2').className='switch valign disabled';
+	}
+}
+function setAdjustMode(adjustMode){
+	if(adjustMode){
+		el('row-options').style.display='flex';
+		el('row-options2').style.display='flex';
+		el('switch-adjust').className='switch valign enabled';
+		el('switch-adjust2').className='switch valign enabled';
+	}else{
+		el('row-options').style.display='none';
+		el('row-options2').style.display='none';
+		el('switch-adjust').className='switch valign disabled';
+		el('switch-adjust2').className='switch valign disabled';
 	}
 }
 

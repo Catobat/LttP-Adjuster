@@ -1,20 +1,57 @@
-function zeldaPatcher(rom, beepRate, heartColor, isQuickswap, menuSpeed, isMusicDisabled, isMSUResume, isFlashingReduced, sprite, owPalettes, uwPalettes){
-  quickswapPatch(rom,isQuickswap);
-  musicPatch(rom, isMusicDisabled);
-  resumePatch(rom,isMSUResume);
-  flashingPatch(rom,isFlashingReduced);
-  menuSpeedPatch(rom,menuSpeed);
-  heartBeepPatch(rom,beepRate);
-  heartColorPatch(rom,heartColor);
-  if(sprite){
-    spritePatch(rom,sprite);
+function zeldaPatcher(rom, gameplay, adjust, pseudoboots, bloodyboots, bloodydamage, beepRate, heartColor, isQuickswap, menuSpeed, isMusicDisabled, isMSUResume, isFlashingReduced, sprite, owPalettes, uwPalettes){
+  if(gameplay){
+    pseudobootsPatch(rom,pseudoboots);
+    bloodybootsPatch(rom,bloodyboots,bloodydamage);
   }
-  vanillaPalette(rom);
-  paletteShufflePatch(rom, uwPalettes, owPalettes);
+  if(adjust){
+    quickswapPatch(rom,isQuickswap);
+    musicPatch(rom,isMusicDisabled);
+    resumePatch(rom,isMSUResume);
+    flashingPatch(rom,isFlashingReduced);
+    menuSpeedPatch(rom,menuSpeed);
+    heartBeepPatch(rom,beepRate);
+    heartColorPatch(rom,heartColor);
+    if(sprite){
+      spritePatch(rom,sprite);
+    }
+    vanillaPalette(rom);
+    paletteShufflePatch(rom, uwPalettes, owPalettes);
+  }
   writeCrc(rom);
 }
 
-function quickswapPatch(rom, isQuickswap){  
+function pseudobootsPatch(rom,pseudoboots){
+  if(pseudoboots!=='nochange'){
+    rom.seekWriteU8(0x18008E,pseudoboots==='on' ? 0x01 : 0x00);
+  }
+}
+
+function bloodybootsPatch(rom,bloodyboots,bloodydamage){
+  switch(bloodyboots){
+    case 'off':
+      writeHexBlock(rom,0x039C28,'8E 6C 03 8A');
+      break;
+    case 'on1':
+      writeHexBlock(rom,0x039C28,'22 04 FE 1C');
+      writeHexBlock(rom,0x0E7E04,'8E 6C 03 E0 02 D0 16 A5 1B F0 06 A5 A0 C9 8B F0 0C EA EA EA EA EA AF 00 FE 1C 8D 73 03 8A 6B');
+      rom.seekWriteU8(0x0E7E00,parseInt(bloodydamage)*2);
+      break;
+    case 'on2':
+      writeHexBlock(rom,0x039C28,'22 04 FE 1C');
+      writeHexBlock(rom,0x0E7E04,'8E 6C 03 E0 02 D0 16 A5 1B F0 06 A5 A0 C9 8B F0 0C AD 1F 03 D0 07 AF 00 FE 1C 8D 73 03 8A 6B');
+      rom.seekWriteU8(0x0E7E00,parseInt(bloodydamage)*2);
+  }
+}
+
+function writeHexBlock(rom,address,block){
+  rom.seek(address);
+  var bytes=block.split(' ');
+  for(var byte of bytes){
+    rom.writeU8(parseInt(byte,16));
+  }
+}
+
+function quickswapPatch(rom, isQuickswap){
   rom.seekWriteU8(0x18004B,isQuickswap ? 0x01 : 0x00);
 }
 
