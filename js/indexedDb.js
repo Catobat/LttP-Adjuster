@@ -40,7 +40,7 @@ function IndexedDb(){
   }  
 }
 
-IndexedDb.prototype.load = function(){  
+IndexedDb.prototype.load = function(){
   if (db) {
     var tx = db.transaction('configs', 'readonly');
     var store = tx.objectStore('configs');
@@ -54,12 +54,34 @@ IndexedDb.prototype.load = function(){
         });      
       }
   
+      this.loadJpRom();
       this.setFormValues();
     }
   } else {
     this.setFormValues();
   }
-  
+}
+
+IndexedDb.prototype.loadJpRom = function(){
+  if(this.obj.jp_file){
+    try{
+      var bin = atob(this.obj.jp_file);
+      var array = new Uint8Array(bin.length);
+      for(var k=0; k<bin.length; k++){
+        array[k] = bin.charCodeAt(k);
+      }
+      var storedRom = new MarcFile(array);
+      var crc = padZeroes(crc32(storedRom, 0), 4);
+      if(crc==='3322effc'){
+        romFile1 = storedRom;
+        jpCrc = crc;
+        el('row-input-file-jp').style.display = 'none';
+      }else{
+        this.obj.jp_file = null;
+      }
+    }
+    catch(e){}
+  }
 }
 
 IndexedDb.prototype.setFormValues = function(){
@@ -97,7 +119,7 @@ IndexedDb.prototype.save = function(tab){
   var id = '';
   if (tab==='create')
     id='2';  
-  // TODO: add jp rom
+  this.saveJpRom();
   this.obj.gameplay = el('switch-gameplay'+id).className.endsWith('enabled');
   this.obj.adjust = el('switch-adjust'+id).className.endsWith('enabled');
   this.obj.pseudoboots = el('select-pseudoboots'+id).value;
@@ -128,4 +150,15 @@ IndexedDb.prototype.save = function(tab){
       this.setFormValues();
     }
   } 
+}
+
+IndexedDb.prototype.saveJpRom = function(){
+  if(!this.obj.jp_file && romFile1 && jpCrc==='3322effc'){
+    var bin = '';
+    var array = romFile1._u8array;
+    for(var k=0; k<array.length; k++){
+      bin += String.fromCharCode(array[k]);
+    }
+    this.obj.jp_file = btoa(bin);
+  }
 }
