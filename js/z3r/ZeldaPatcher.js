@@ -1,7 +1,8 @@
-function zeldaPatcher(rom, gameplay, adjust, pseudoboots, bloodyboots, bloodydamage, beepRate, heartColor, isQuickswap, menuSpeed, isMusicDisabled, isMSUResume, isFlashingReduced, sprite, owPalettes, uwPalettes){
+function zeldaPatcher(rom, gameplay, adjust, pseudoboots, bloodyboots, bloodydamage, dashcharge, beepRate, heartColor, isQuickswap, menuSpeed, isMusicDisabled, isMSUResume, isFlashingReduced, sprite, owPalettes, uwPalettes){
   if(gameplay){
     pseudobootsPatch(rom,pseudoboots);
     bloodybootsPatch(rom,bloodyboots,bloodydamage);
+    dashchargePatch(rom,dashcharge);
   }
   if(adjust){
     quickswapPatch(rom,isQuickswap);
@@ -40,6 +41,22 @@ function bloodybootsPatch(rom,bloodyboots,bloodydamage){
       writeHexBlock(rom,0x039C28,'22 04 FE 1C');
       writeHexBlock(rom,0x0E7E04,'8E 6C 03 E0 02 D0 16 A5 1B F0 06 A5 A0 C9 8B F0 0C AD 1F 03 D0 07 AF 00 FE 1C 8D 73 03 8A 6B');
       rom.seekWriteU8(0x0E7E00,parseInt(bloodydamage)*2);
+  }
+}
+
+function dashchargePatch(rom,dashcharge){
+  switch(dashcharge){
+    case 'instant':
+      rom.seekWriteU8(0x03B283,1);
+      break;
+    case 'fast':
+      rom.seekWriteU8(0x03B283,14);
+      break;
+    case 'normal':
+      rom.seekWriteU8(0x03B283,29);
+      break;
+    case 'slow':
+      rom.seekWriteU8(0x03B283,44);
   }
 }
 

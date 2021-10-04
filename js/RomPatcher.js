@@ -283,8 +283,8 @@ function preparePatchedRom(originalRom, patchedRom){
 	fetchSpriteData(patchedRom,indexedDb.obj.sprite,
 		(rom,sprite) => {
 			zeldaPatcher(rom,indexedDb.obj.gameplay,indexedDb.obj.adjust,indexedDb.obj.pseudoboots,
-				indexedDb.obj.bloodyboots,indexedDb.obj.bloodydamage,indexedDb.obj.beep,indexedDb.obj.color,
-				indexedDb.obj.quickswap,indexedDb.obj.speed,!indexedDb.obj.music,
+				indexedDb.obj.bloodyboots,indexedDb.obj.bloodydamage,indexedDb.obj.dashcharge,indexedDb.obj.beep,
+				indexedDb.obj.color,indexedDb.obj.quickswap,indexedDb.obj.speed,!indexedDb.obj.music,
 				indexedDb.obj.resume,indexedDb.obj.flashing,sprite,
 				indexedDb.obj.owp,indexedDb.obj.uwp);
 			setMessage('create');
@@ -299,8 +299,8 @@ function adjustPatch(romToAdjust){
 	fetchSpriteData(romToAdjust,indexedDb.obj.sprite,
 		(rom,sprite) => {
 			zeldaPatcher(rom,indexedDb.obj.gameplay,indexedDb.obj.adjust,indexedDb.obj.pseudoboots,
-				indexedDb.obj.bloodyboots,indexedDb.obj.bloodydamage,indexedDb.obj.beep,indexedDb.obj.color,
-				indexedDb.obj.quickswap,indexedDb.obj.speed,!indexedDb.obj.music,
+				indexedDb.obj.bloodyboots,indexedDb.obj.bloodydamage,indexedDb.obj.dashcharge,indexedDb.obj.beep,
+				indexedDb.obj.color,indexedDb.obj.quickswap,indexedDb.obj.speed,!indexedDb.obj.music,
 				indexedDb.obj.resume,indexedDb.obj.flashing,sprite,
 				indexedDb.obj.owp,indexedDb.obj.uwp);
 			setMessage('apply');
