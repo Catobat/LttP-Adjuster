@@ -34,12 +34,12 @@ function bloodybootsPatch(rom,bloodyboots,bloodydamage){
       break;
     case 'on1':
       writeHexBlock(rom,0x039C28,'22 04 FE 1C');
-      writeHexBlock(rom,0x0E7E04,'8E 6C 03 E0 02 D0 16 A5 1B F0 06 A5 A0 C9 8B F0 0C EA EA EA EA EA AF 00 FE 1C 8D 73 03 8A 6B');
+      writeHexBlock(rom,0x0E7E04,'8E 6C 03 E0 02 D0 1A A5 1B F0 06 A5 A0 C9 8B F0 10 A5 55 D0 0C EA EA EA EA EA AF 00 FE 1C 8D 73 03 8A 6B');
       rom.seekWriteU8(0x0E7E00,parseInt(bloodydamage)*2);
       break;
     case 'on2':
       writeHexBlock(rom,0x039C28,'22 04 FE 1C');
-      writeHexBlock(rom,0x0E7E04,'8E 6C 03 E0 02 D0 16 A5 1B F0 06 A5 A0 C9 8B F0 0C AD 1F 03 D0 07 AF 00 FE 1C 8D 73 03 8A 6B');
+      writeHexBlock(rom,0x0E7E04,'8E 6C 03 E0 02 D0 1A A5 1B F0 06 A5 A0 C9 8B F0 10 A5 55 D0 0C AD 1F 03 D0 07 AF 00 FE 1C 8D 73 03 8A 6B');
       rom.seekWriteU8(0x0E7E00,parseInt(bloodydamage)*2);
   }
 }
