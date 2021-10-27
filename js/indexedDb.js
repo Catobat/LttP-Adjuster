@@ -4,7 +4,7 @@ function IndexedDb(){
   this.obj = {
     jp_file: null,
     gameplay: true,
-    adjust: true,
+    adjust: false,
     pseudoboots: 'nochange',
     bloodyboots: 'nochange',
     bloodydamage: '2',
