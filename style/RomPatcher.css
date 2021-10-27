@@ -154,6 +154,34 @@ hr{border:none;border-top:1px dotted #bbb;margin:15px 0}
 	text-align:right
 }
 
+.info-button{
+	float:right;
+	border-radius:2px;
+	padding: 3px 8px 9px 8px;
+	transition: background-color .1s;
+	background-color:#edefef;
+	height: 20px;
+}
+.info-button:hover{
+	background-color:#dee1e1;
+	cursor:pointer;
+}
+.info-button.enabled{
+	background-color:#41bdc7;
+}
+
+.info-text{
+	width:100%;
+	padding:4px 8px;
+	margin-bottom:20px;
+	font-size:14px;
+	border:2px solid #41bdc7;
+	border-radius:2px;
+	cursor:auto;
+	user-select:text;
+	display:none;
+}
+
 .section{font-size:16px;font-weight:700;}
 
 

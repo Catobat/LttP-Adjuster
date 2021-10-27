@@ -426,6 +426,45 @@ function setAdjustMode(adjustMode){
 		el('switch-adjust2').className='switch valign disabled';
 	}
 }
+function setPseudoBootsInfoMode(infoMode){
+	if(infoMode){
+		el('info-text-pseudoboots').style.display='block';
+		el('info-text-pseudoboots2').style.display='block';
+		el('info-button-pseudoboots').className='info-button enabled';
+		el('info-button-pseudoboots2').className='info-button enabled';
+	}else{
+		el('info-text-pseudoboots').style.display='none';
+		el('info-text-pseudoboots2').style.display='none';
+		el('info-button-pseudoboots').className='info-button';
+		el('info-button-pseudoboots2').className='info-button';
+	}
+}
+function setBloodyBootsInfoMode(infoMode){
+	if(infoMode){
+		el('info-text-bloodyboots').style.display='block';
+		el('info-text-bloodyboots2').style.display='block';
+		el('info-button-bloodyboots').className='info-button enabled';
+		el('info-button-bloodyboots2').className='info-button enabled';
+	}else{
+		el('info-text-bloodyboots').style.display='none';
+		el('info-text-bloodyboots2').style.display='none';
+		el('info-button-bloodyboots').className='info-button';
+		el('info-button-bloodyboots2').className='info-button';
+	}
+}
+function setDashChargeInfoMode(infoMode){
+	if(infoMode){
+		el('info-text-dashcharge').style.display='block';
+		el('info-text-dashcharge2').style.display='block';
+		el('info-button-dashcharge').className='info-button enabled';
+		el('info-button-dashcharge2').className='info-button enabled';
+	}else{
+		el('info-text-dashcharge').style.display='none';
+		el('info-text-dashcharge2').style.display='none';
+		el('info-button-dashcharge').className='info-button';
+		el('info-button-dashcharge2').className='info-button';
+	}
+}
 
 
 

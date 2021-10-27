@@ -83,6 +83,14 @@
 					<option value="off">Off</option>
 					<option value="on">On</option>
 				</select>
+				<span id="info-button-pseudoboots" class="info-button" onclick="setPseudoBootsInfoMode(!/enabled/.test(this.className));">
+					Info
+				</span>
+			</div>
+			<div id="info-text-pseudoboots" class="info-text">
+				Pseudo Boots allow you to dash even before finding Pegasus Boots for the convenience of faster movement.<br>
+				Logic sequence breaks like getting items from torches are generally prevented, you will still need Pegasus Boots for those.<br>
+				This setting does not work with vanilla or older seeds because it only sets a flag in the ROM.
 			</div>
 			<div class="leftcol">Bloody Boots:</div>
 			<div class="rightcol">
@@ -92,6 +100,9 @@
 					<option value="on1">On (V1)</option>
 					<option value="on2">On (V2)</option>
 				</select>
+				<span id="info-button-bloodyboots" class="info-button" onclick="setBloodyBootsInfoMode(!/enabled/.test(this.className));">
+					Info
+				</span>
 			</div>
 			<div class="leftcol">Bloody Boots Damage:</div>
 			<div class="rightcol">
@@ -102,6 +113,13 @@
 					<option value="4">Full Heart</option>
 				</select>
 			</div>
+			<div id="info-text-bloodyboots" class="info-text">
+				Every time you start charging a dash, you take a specified amount of damage. Dash wisely!<br>
+				Damage can be avoided by using the Cape or Cane of Byrna, or by already having i-frames in V2.<br>
+				This setting does not affect the Ganon's Tower Hookshot Room to lower the risk of unbeatable seeds.<br>
+				This should not be combined with modes like OWG or OHKO for obvious reasons.<br>
+				In V1, you even take damage if you have i-frames. This is the less friendly version, but it at least allows for very quick death warps.
+			</div>
 			<div class="leftcol">Dash Charge:</div>
 			<div class="rightcol">
 				<select id="select-dashcharge">
@@ -111,6 +129,12 @@
 					<option value="normal">Normal</option>
 					<option value="slow">Slow</option>
 				</select>
+				<span id="info-button-dashcharge" class="info-button" onclick="setDashChargeInfoMode(!/enabled/.test(this.className));">
+					Info
+				</span>
+			</div>
+			<div id="info-text-dashcharge" class="info-text">
+				Set how long it takes to charge a dash (normally half a second).
 			</div>
 		</div>
 		<div class="row switch-row">
@@ -224,6 +248,14 @@
 					<option value="off">Off</option>
 					<option value="on">On</option>
 				</select>
+				<span id="info-button-pseudoboots2" class="info-button" onclick="setPseudoBootsInfoMode(!/enabled/.test(this.className));">
+					Info
+				</span>
+			</div>
+			<div id="info-text-pseudoboots2" class="info-text">
+				Pseudo Boots allow you to dash even before finding Pegasus Boots for the convenience of faster movement.<br>
+				Logic sequence breaks like getting items from torches are generally prevented, you will still need Pegasus Boots for those.<br>
+				This setting does not work with vanilla or older seeds because it only sets a flag in the ROM.
 			</div>
 			<div class="leftcol">Bloody Boots:</div>
 			<div class="rightcol">
@@ -233,6 +265,9 @@
 					<option value="on1">On (V1)</option>
 					<option value="on2">On (V2)</option>
 				</select>
+				<span id="info-button-bloodyboots2" class="info-button" onclick="setBloodyBootsInfoMode(!/enabled/.test(this.className));">
+					Info
+				</span>
 			</div>
 			<div class="leftcol">Bloody Boots Damage:</div>
 			<div class="rightcol">
@@ -243,6 +278,13 @@
 					<option value="4">Full Heart</option>
 				</select>
 			</div>
+			<div id="info-text-bloodyboots2" class="info-text">
+				Every time you start charging a dash, you take a specified amount of damage. Dash wisely!<br>
+				Damage can be avoided by using the Cape or Cane of Byrna, or by already having i-frames in V2.<br>
+				This setting does not affect the Ganon's Tower Hookshot Room to lower the risk of unbeatable seeds.<br>
+				This should not be combined with modes like OWG or OHKO for obvious reasons.<br>
+				In V1, you even take damage if you have i-frames. This is the less friendly version, but it at least allows for very quick death warps.
+			</div>
 			<div class="leftcol">Dash Charge:</div>
 			<div class="rightcol">
 				<select id="select-dashcharge2">
@@ -252,6 +294,12 @@
 					<option value="normal">Normal</option>
 					<option value="slow">Slow</option>
 				</select>
+				<span id="info-button-dashcharge2" class="info-button" onclick="setDashChargeInfoMode(!/enabled/.test(this.className));">
+					Info
+				</span>
+			</div>
+			<div id="info-text-dashcharge2" class="info-text">
+				Set how long it takes to charge a dash (normally half a second).
 			</div>
 		</div>
 		<div class="row switch-row">
