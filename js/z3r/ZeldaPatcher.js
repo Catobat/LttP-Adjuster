@@ -45,18 +45,26 @@ function bloodybootsPatch(rom,bloodyboots,bloodydamage){
 }
 
 function dashchargePatch(rom,dashcharge){
-  switch(dashcharge){
-    case 'instant':
-      rom.seekWriteU8(0x03B283,1);
-      break;
-    case 'fast':
-      rom.seekWriteU8(0x03B283,14);
-      break;
-    case 'normal':
-      rom.seekWriteU8(0x03B283,29);
-      break;
-    case 'slow':
-      rom.seekWriteU8(0x03B283,44);
+  if(dashcharge!=='nochange'){
+    switch(dashcharge){
+      case 'instant':
+        rom.seekWriteU8(0x03B283,1);
+        break;
+      case 'fast':
+        rom.seekWriteU8(0x03B283,14);
+        break;
+      case 'normal':
+        rom.seekWriteU8(0x03B283,29);
+        break;
+      case 'slow':
+        rom.seekWriteU8(0x03B283,44);
+    }
+    if(dashcharge==='normal'){
+      writeHexBlock(rom,0x03F4E6,'05 4D D0 02 18 6B 38');
+    }else{
+      writeHexBlock(rom,0x03F4E6,'D0 E1 22 F0 FF 1C 6B');
+      writeHexBlock(rom,0x0E7FF0,'A5 4D F0 06 A5 25 10 04 64 4D 18 6B 38 6B');
+    }
   }
 }
 
