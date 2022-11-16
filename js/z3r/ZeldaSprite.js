@@ -4,7 +4,7 @@ function Sprite(){
   this.glovePalette=[];
 };
 
-function fetchSpriteData(rom, spriteUrl, onLoad){
+function fetchSpriteData(rom, spriteUrl, spriteData, onLoad){
   if (spriteUrl === 'random') {
     let rnd = Math.floor(Math.random() * (spriteDatabase.length - 2)) + 1;
     //if (rnd > 0) // removing vanilla link for now
@@ -16,11 +16,49 @@ function fetchSpriteData(rom, spriteUrl, onLoad){
     if (onLoad) {
       onLoad(rom, null);
     }
-  } else {
+  } else if (spriteUrl === 'custom') {
+    var sprite = new Sprite();
+    spriteData.littleEndian = true;
+
+    if(spriteData.fileSize===0x7000){
+      // Sprite file with graphics and without palette data
+      sprite.sprite = spriteData.readBytes(0x7000);
+      sprite.palette = defaultSpritePalette;
+      sprite.glovePalette = defaultGlovePalette;
+    }else if(spriteData.fileSize===0x7078){
+      // Sprite file with graphics and palette data
+      sprite.sprite = spriteData.readBytes(0x7000);
+      sprite.palette = spriteData.readBytes(0x78);
+      spriteData.seek(0x7036)
+      var glove1 = spriteData.readBytes(0x2);
+      spriteData.seek(0x7054);
+      var glove2 = spriteData.readBytes(0x2);
+      sprite.glovePalette = [...glove1, ...glove2];
+    }else if(spriteData.fileSize===0x707C){
+      // Sprite file with graphics and palette data including gloves
+      sprite.sprite = spriteData.readBytes(0x7000);
+      sprite.palette = spriteData.readBytes(0x78);
+      sprite.glovePalette = spriteData.readBytes(0x4);
+    }else if(spriteData.fileSize>=0x100000 && spriteData.fileSize<=0x200000){
+      // Full rom with patched sprite, extract it
+      spriteData.seek(0x80000);
+      sprite.sprite = spriteData.readBytes(0x7000);
+      spriteData.seek(0xDD308);
+      sprite.palette = spriteData.readBytes(0x78);
+      spriteData.seek(0xDEDF5);
+      sprite.glovePalette = spriteData.readBytes(0x4);
+    }else if(spriteData.readString(4)==='ZSPR'){
+      parseZspr(sprite, spriteData);
+    }
+
+    if (onLoad) {
+      onLoad(rom, sprite);
+    }
+  } else { 
     fetch(spriteUrl)
       .then(response => checkStatus(response) && response.arrayBuffer())
-      .then(buffer => {    
-        var sprite = new Sprite();      
+      .then(buffer => {
+        var sprite = new Sprite();
         var spriteData = new MarcFile(buffer);
         spriteData.littleEndian = true;
         
@@ -179,7 +217,8 @@ const defaultSpritePalette = [255, 127, 126, 35, 183, 17, 158, 54, 165, 20, 255,
 
 const defaultGlovePalette = [246, 82, 118, 3];
 
-const spriteDatabase = [{"name":"Random","author":"","version":1,"file":"random","tags":[]},
+const spriteDatabase = [{"name":"[Random]","author":"","version":1,"file":"random","tags":[]},
+{"name":"[Custom]","author":"","version":1,"file":"custom","tags":[]},
 {"name":"Four Swords Link","author":"Mike Trethewey","version":1,"file":"https:\/\/alttpr-assets.s3.us-east-2.amazonaws.com\/4slink-armors.1.zspr","preview":"https:\/\/alttpr-assets.s3.us-east-2.amazonaws.com\/4slink-armors.1.zspr.png","tags":["Link","Male","Legend of Zelda"],"usage":["smz3","commercial"]},
 {"name":"Abigail","author":"Fish_waffle64","version":1,"file":"https:\/\/alttpr-assets.s3.us-east-2.amazonaws.com\/abigail.1.zspr","preview":"https:\/\/alttpr-assets.s3.us-east-2.amazonaws.com\/abigail.1.zspr.png","tags":["Female"],"usage":["smz3"]},
 {"name":"Adol","author":"Yuushia","version":1,"file":"https:\/\/alttpr-assets.s3.us-east-2.amazonaws.com\/adol.1.zspr","preview":"https:\/\/alttpr-assets.s3.us-east-2.amazonaws.com\/adol.1.zspr.png","tags":["Ys","Male"],"usage":["smz3","commercial"]},
