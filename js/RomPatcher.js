@@ -10,7 +10,7 @@ else if(location.protocol==='https:' && 'serviceWorker' in navigator)
 
 
 
-var romFile, patchFile, patch, romFile1, jpCrc, tempFile, indexedDb;
+var romFile, patchFile, patch, romFile1, jpCrc, tempFile, indexedDb, spriteFile, spriteFile2;
 var fetchedPatches;
 var CAN_USE_WEB_WORKERS=false;
 var webWorkerApply,webWorkerCrc;
@@ -197,11 +197,35 @@ addEvent(window,'load',function(){
 		}
 	});
 
+	el('input-file-sprite').value='';
+	addEvent(el('input-file-sprite'), 'change', function(e){
+		if (e.target.value){
+			spriteFile=new MarcFile(this);
+		}
+	});
+
+	el('input-file-sprite2').value='';
+	addEvent(el('input-file-sprite2'), 'change', function(e){
+		if (e.target.value){
+			spriteFile2=new MarcFile(this);
+		}
+	});
+
 	var spriteSelect = el('select-sprite');
 	var spriteSelect2 = el('select-sprite2');
 	spriteDatabase.forEach(eachSprite => {
 		spriteSelect.options.add(new Option(eachSprite.name, eachSprite.file));
 		spriteSelect2.options.add(new Option(eachSprite.name, eachSprite.file));
+	});
+
+	spriteSelect.addEventListener("change", function() {
+		var selectedSprite = spriteSelect[spriteSelect.selectedIndex];
+		el('input-file-sprite').style.display = selectedSprite.getAttribute('value') == "custom" ? 'block' : 'none';
+	});
+
+	spriteSelect2.addEventListener("change", function() {
+		var selectedSprite = spriteSelect2[spriteSelect2.selectedIndex];
+		el('input-file-sprite2').style.display = selectedSprite.getAttribute('value') == "custom" ? 'block' : 'none';
 	});
 
 	indexedDb = new IndexedDb();
@@ -280,7 +304,7 @@ function preparePatchedRom(originalRom, patchedRom){
 	patchedRom.fileType=originalRom.fileType;
 
 	// Adjust the ROM
-	fetchSpriteData(patchedRom,indexedDb.obj.sprite,
+	fetchSpriteData(patchedRom,indexedDb.obj.sprite,spriteFile2,
 		(rom,sprite) => {
 				zeldaPatcher(rom,indexedDb.obj.beep,indexedDb.obj.color,
 					indexedDb.obj.quickswap,indexedDb.obj.speed,!indexedDb.obj.music,
@@ -294,7 +318,7 @@ function preparePatchedRom(originalRom, patchedRom){
 function adjustPatch(romToAdjust){
 	indexedDb.save('apply');
 	romToAdjust.fileName=romToAdjust.fileName.replace(/\.([^\.]*?)$/, ' (adjusted).$1');	
-	fetchSpriteData(romToAdjust,indexedDb.obj.sprite,
+	fetchSpriteData(romToAdjust,indexedDb.obj.sprite,spriteFile,
 		(rom,sprite) => {
 				zeldaPatcher(rom,indexedDb.obj.beep,indexedDb.obj.color,
 					indexedDb.obj.quickswap,indexedDb.obj.speed,!indexedDb.obj.music,

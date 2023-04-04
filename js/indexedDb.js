@@ -3,6 +3,8 @@ var db;
 function IndexedDb(){
   this.obj = {
     jp_file: null,
+    sprite_file: null,
+    sprite_file_name: null,
     quickswap: true,
     music: true,
     resume: true,
@@ -50,6 +52,7 @@ IndexedDb.prototype.load = function(){
       }
   
       this.loadJpRom();
+      this.loadSprite();
       this.setFormValues();
     }
   } else {
@@ -79,12 +82,29 @@ IndexedDb.prototype.loadJpRom = function(){
   }
 }
 
+IndexedDb.prototype.loadSprite = function(){
+  if(this.obj.sprite_file){
+    try{
+      var bin = atob(this.obj.sprite_file);
+      var array = new Uint8Array(bin.length);
+      for(var k=0; k<bin.length; k++){
+        array[k] = bin.charCodeAt(k);
+      }
+      spriteFile = spriteFile2 = new MarcFile(array);
+      document.getElementById("select-sprite").options[1].innerHTML = "[Custom] - " + this.obj.sprite_file_name;
+      document.getElementById("select-sprite2").options[1].innerHTML = "[Custom] - " + this.obj.sprite_file_name;
+    }
+    catch(e){}
+  }
+}
+
 IndexedDb.prototype.setFormValues = function(){
   el('checkbox-quickswap').checked = this.obj.quickswap;
   el('checkbox-music').checked = this.obj.music;
   el('checkbox-resume').checked = this.obj.resume;
   el('checkbox-flashing').checked = this.obj.flashing;
   el('select-sprite').value = this.obj.sprite;
+  el('input-file-sprite').style.display=this.obj.sprite == "custom" ? "block" : "none";
   el('select-heartcolor').value = this.obj.color;
   el('select-beep').value = this.obj.beep;
   el('select-menuspeed').value = this.obj.speed;
@@ -95,6 +115,7 @@ IndexedDb.prototype.setFormValues = function(){
   el('checkbox-resume2').checked = this.obj.resume;
   el('checkbox-flashing2').checked = this.obj.flashing;
   el('select-sprite2').value = this.obj.sprite;
+  el('input-file-sprite2').style.display=this.obj.sprite == "custom" ? "block" : "none";
   el('select-heartcolor2').value = this.obj.color;
   el('select-beep2').value = this.obj.beep;
   el('select-menuspeed2').value = this.obj.speed;
@@ -107,6 +128,7 @@ IndexedDb.prototype.save = function(tab){
   if (tab==='create')
     id='2';  
   this.saveJpRom();
+  this.saveSprite(id);
   this.obj.quickswap = el('checkbox-quickswap'+id).checked;
   this.obj.music = el('checkbox-music'+id).checked;
   this.obj.resume = el('checkbox-resume'+id).checked;
@@ -142,5 +164,21 @@ IndexedDb.prototype.saveJpRom = function(){
       bin += String.fromCharCode(array[k]);
     }
     this.obj.jp_file = btoa(bin);
+  }
+}
+
+IndexedDb.prototype.saveSprite = function(id){
+  var file = id==='2' ? spriteFile2 : spriteFile;
+  if(file && document.getElementById("input-file-sprite"+id).files[0]){
+    var bin = '';
+    var array = file._u8array;
+    for(var k=0; k<array.length; k++){
+      bin += String.fromCharCode(array[k]);
+    }
+    var data = btoa(bin);
+    if(this.obj.sprite_file !== data) {
+      this.obj.sprite_file = data;
+      this.obj.sprite_file_name = document.getElementById("input-file-sprite"+id).files[0].name;
+    }
   }
 }
