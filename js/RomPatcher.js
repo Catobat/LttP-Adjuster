@@ -307,7 +307,8 @@ function preparePatchedRom(originalRom, patchedRom){
 	fetchSpriteData(patchedRom,indexedDb.obj.sprite,spriteFile2,
 		(rom,sprite) => {
 			zeldaPatcher(rom,indexedDb.obj.gameplay,indexedDb.obj.adjust,indexedDb.obj.pseudoboots,
-				indexedDb.obj.bloodyboots,indexedDb.obj.bloodydamage,indexedDb.obj.dashcharge,indexedDb.obj.beep,
+				indexedDb.obj.bloodyboots,indexedDb.obj.bloodydamage,indexedDb.obj.dashcharge,
+				indexedDb.obj.onemind,indexedDb.obj.onemindtimer,indexedDb.obj.beep,
 				indexedDb.obj.color,indexedDb.obj.quickswap,indexedDb.obj.speed,!indexedDb.obj.music,
 				indexedDb.obj.resume,indexedDb.obj.flashing,sprite,
 				indexedDb.obj.owp,indexedDb.obj.uwp);
@@ -323,7 +324,8 @@ function adjustPatch(romToAdjust){
 	fetchSpriteData(romToAdjust,indexedDb.obj.sprite,spriteFile,
 		(rom,sprite) => {
 			zeldaPatcher(rom,indexedDb.obj.gameplay,indexedDb.obj.adjust,indexedDb.obj.pseudoboots,
-				indexedDb.obj.bloodyboots,indexedDb.obj.bloodydamage,indexedDb.obj.dashcharge,indexedDb.obj.beep,
+				indexedDb.obj.bloodyboots,indexedDb.obj.bloodydamage,indexedDb.obj.dashcharge,
+				indexedDb.obj.onemind,indexedDb.obj.onemindtimer,indexedDb.obj.beep,
 				indexedDb.obj.color,indexedDb.obj.quickswap,indexedDb.obj.speed,!indexedDb.obj.music,
 				indexedDb.obj.resume,indexedDb.obj.flashing,sprite,
 				indexedDb.obj.owp,indexedDb.obj.uwp);
@@ -487,6 +489,19 @@ function setDashChargeInfoMode(infoMode){
 		el('info-text-dashcharge2').style.display='none';
 		el('info-button-dashcharge').className='info-button';
 		el('info-button-dashcharge2').className='info-button';
+	}
+}
+function setOneMindInfoMode(infoMode){
+	if(infoMode){
+		el('info-text-onemind').style.display='block';
+		el('info-text-onemind2').style.display='block';
+		el('info-button-onemind').className='info-button enabled';
+		el('info-button-onemind2').className='info-button enabled';
+	}else{
+		el('info-text-onemind').style.display='none';
+		el('info-text-onemind2').style.display='none';
+		el('info-button-onemind').className='info-button';
+		el('info-button-onemind2').className='info-button';
 	}
 }
 

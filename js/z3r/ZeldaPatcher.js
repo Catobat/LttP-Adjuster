@@ -1,8 +1,10 @@
-function zeldaPatcher(rom, gameplay, adjust, pseudoboots, bloodyboots, bloodydamage, dashcharge, beepRate, heartColor, isQuickswap, menuSpeed, isMusicDisabled, isMSUResume, isFlashingReduced, sprite, owPalettes, uwPalettes){
+function zeldaPatcher(rom, gameplay, adjust, pseudoboots, bloodyboots, bloodydamage, dashcharge, onemind, onemindtimer, beepRate, heartColor, isQuickswap, menuSpeed, isMusicDisabled, isMSUResume, isFlashingReduced, sprite, owPalettes, uwPalettes){
+  rom.littleEndian = true;
   if(gameplay){
     pseudobootsPatch(rom,pseudoboots);
     bloodybootsPatch(rom,bloodyboots,bloodydamage);
     dashchargePatch(rom,dashcharge);
+    onemindPatch(rom,onemind,onemindtimer);
   }
   if(adjust){
     quickswapPatch(rom,isQuickswap);
@@ -64,6 +66,15 @@ function dashchargePatch(rom,dashcharge){
     }else{
       writeHexBlock(rom,0x03F4E6,'D0 E1 22 F0 FF 1C 6B');
       writeHexBlock(rom,0x0E7FF0,'A5 4D F0 06 A5 25 10 04 64 4D 18 6B 38 6B');
+    }
+  }
+}
+
+function onemindPatch(rom,onemind,onemindtimer){
+  if(onemind!=='nochange'){
+    rom.seekWriteU8(0x18009A,onemind==='off' ? 0x00 : parseInt(onemind)+1);
+    if(onemind!=='off'){
+      rom.writeU16(parseInt(onemindtimer));
     }
   }
 }

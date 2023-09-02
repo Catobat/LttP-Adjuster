@@ -11,6 +11,8 @@ function IndexedDb(){
     bloodyboots: 'nochange',
     bloodydamage: '2',
     dashcharge: 'nochange',
+    onemind: 'nochange',
+    onemindtimer: '60',
     quickswap: true,
     music: true,
     resume: true,
@@ -111,6 +113,8 @@ IndexedDb.prototype.setFormValues = function(){
   el('select-bloodyboots').value = this.obj.bloodyboots;
   el('select-bloodydamage').value = this.obj.bloodydamage;
   el('select-dashcharge').value = this.obj.dashcharge;
+  el('select-onemind').value = this.obj.onemind;
+  el('text-onemindtimer').value = this.obj.onemindtimer;
   el('checkbox-quickswap').checked = this.obj.quickswap;
   el('checkbox-music').checked = this.obj.music;
   el('checkbox-resume').checked = this.obj.resume;
@@ -126,6 +130,8 @@ IndexedDb.prototype.setFormValues = function(){
   el('select-bloodyboots2').value = this.obj.bloodyboots;
   el('select-bloodydamage2').value = this.obj.bloodydamage;
   el('select-dashcharge2').value = this.obj.dashcharge;
+  el('select-onemind2').value = this.obj.onemind;
+  el('text-onemindtimer2').value = this.obj.onemindtimer;
   el('checkbox-quickswap2').checked = this.obj.quickswap;
   el('checkbox-music2').checked = this.obj.music;
   el('checkbox-resume2').checked = this.obj.resume;
@@ -151,6 +157,8 @@ IndexedDb.prototype.save = function(tab){
   this.obj.bloodyboots = el('select-bloodyboots'+id).value;
   this.obj.bloodydamage = el('select-bloodydamage'+id).value;
   this.obj.dashcharge = el('select-dashcharge'+id).value;
+  this.obj.onemind = el('select-onemind'+id).value;
+  this.obj.onemindtimer = el('text-onemindtimer'+id).value;
   this.obj.quickswap = el('checkbox-quickswap'+id).checked;
   this.obj.music = el('checkbox-music'+id).checked;
   this.obj.resume = el('checkbox-resume'+id).checked;

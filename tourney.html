@@ -133,6 +133,26 @@
 			<div id="info-text-dashcharge" class="info-text">
 				Set how long it takes to charge a dash (normally half a second).
 			</div>
+			<div class="leftcol">One Mind:</div>
+			<div class="rightcol">
+				<select id="select-onemind">
+					<option value="nochange">(No change)</option>
+					<option value="off">Off</option>
+					<option value="2">2 Players</option>
+					<option value="3">3 Players</option>
+					<option value="4">4 Players</option>
+					<option value="5">5 Players</option>
+				</select>
+				<span style="padding:8px;">Frames:</span>
+				<input id="text-onemindtimer" type="text" style="width:120px;" />
+				<span id="info-button-onemind" class="info-button" onclick="setOneMindInfoMode(!/enabled/.test(this.className));">
+					Info
+				</span>
+			</div>
+			<div id="info-text-onemind" class="info-text">
+				This enables One Mind where multiple players take turns controlling the game, always switching after the selected number of frames.<br>
+				This setting does not work with vanilla or old seeds because it only writes values to the ROM that are used by the One Mind patch included in the Randomizer code.
+			</div>
 		</div>
 		<div class="row switch-row">
 			<span id="switch-adjust-button" onclick="setAdjustMode(!/enabled/.test(el('switch-adjust').className));"><span id="switch-adjust" class="switch valign enabled"></span> <span class="section">Adjust</span></span>
@@ -295,6 +315,26 @@
 			</div>
 			<div id="info-text-dashcharge2" class="info-text">
 				Set how long it takes to charge a dash (normally half a second).
+			</div>
+			<div class="leftcol">One Mind:</div>
+			<div class="rightcol">
+				<select id="select-onemind2">
+					<option value="nochange">(No change)</option>
+					<option value="off">Off</option>
+					<option value="2">2 Players</option>
+					<option value="3">3 Players</option>
+					<option value="4">4 Players</option>
+					<option value="5">5 Players</option>
+				</select>
+				<span style="padding:8px;">Frames:</span>
+				<input id="text-onemindtimer2" type="text" style="width:120px;" />
+				<span id="info-button-onemind2" class="info-button" onclick="setOneMindInfoMode(!/enabled/.test(this.className));">
+					Info
+				</span>
+			</div>
+			<div id="info-text-onemind2" class="info-text">
+				This enables One Mind where multiple players take turns controlling the game, always switching after the selected number of frames.<br>
+				This setting does not work with vanilla or old seeds because it only writes values to the ROM that are used by the One Mind patch included in the Randomizer code.
 			</div>
 		</div>
 		<div class="row switch-row">

@@ -187,7 +187,7 @@ hr{border:none;border-top:1px dotted #bbb;margin:15px 0}
 
 
 /* forms */
-input[type=file],select{
+input[type=file],input[type=text],select{
 	box-sizing:border-box;
 	max-width:100%;
 	font-family:inherit;
@@ -198,6 +198,7 @@ input[type=file],select{
 	background-color:#edefef;
 }
 input[type=file]{padding:6px 10px}
+input[type=text]{padding:6px 10px}
 select{
 	padding:6px 18px 6px 10px;
 	-webkit-appearance:none;
